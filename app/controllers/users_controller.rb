@@ -29,10 +29,12 @@ class UsersController < ApplicationController
       end
     end
 
-    @today_book =  @books.created_today
-    @yesterday_book = @books.created_yesterday
-    # @this_week_book = @books.created_this_week
-    # @last_week_book = @books.created_last_week
+  end
+
+  def search
+    @user = User.find(params[:user_id])
+    @books = @user.books.where(created_at: params[:created_at].to_date.all_day)
+    render :search
 
   end
 
@@ -61,6 +63,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     @user = user.follower_users
   end
+
 
 
   private
